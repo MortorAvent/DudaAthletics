@@ -9,7 +9,8 @@ function RootLayout({ children }) {
     { id: 2, label: 'Laboratorium 1', link: '/lab1' },
     { id: 3, label: 'Laboratorium 2', link: '/lab2' },
     { id: 4, label: 'Laboratorium 3' , link: '/lab3'},
-    { id: 5, label: 'Laboratorium 4' , link: '/lab4'}
+    { id: 5, label: 'Laboratorium 4' , link: '/lab4'},
+    { id: 6, label: 'Dodaj Podopiecznego', link: '/lab4/add' },
   ];
  
   return (

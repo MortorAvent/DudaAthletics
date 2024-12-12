@@ -5,7 +5,7 @@ import AppContext from '../data/AppContext';
  
 function FlexContainer({ element: Element }) {
   const context = useContext(AppContext);
-  const { items, dispatch } = context; // Pobierz items i dispatch z kontekstu
+  const { items, dispatch } = context;
  
   return (
     <Container>
