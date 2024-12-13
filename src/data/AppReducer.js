@@ -1,22 +1,21 @@
-const AppReducer = (state, action) => {
+function AppReducer(state, action) {
   switch (action.type) {
-    case 'add':
-     { ''
-        const newId = state.length ? state[state.length - 1].id + 1 : 1;
-      return [...state, { ...action.item, id: newId }]; }
-    case 'edit':
-      return state.map(item =>
-        item.id === action.id ? { ...item, ...action.updatedItem } : item
-      );
-    case 'delete':
-      return state.filter(item => item.id !== action.id);
-    case 'rate':
-      return state.map(item =>
-        item.id === action.id ? { ...item, rating: action.rating } : item
-      );
-    default:
-      return state;
+      case "add":
+          return [...state, action.data];
+      case "edit":
+          return state.map(item => item.id === action.data.id ? action.data : item);
+      case "delete":
+          return state.filter(item => item.id !== action.id);
+      case "rate": {
+          return state.map(item => 
+              item.id === action.id 
+                  ? { ...item, rating: item.rating === 10 ? 0 : item.rating + 1 }
+                  : item
+          );
+      }
+      default:
+          return state;
   }
-};
- 
+}
+
 export default AppReducer;

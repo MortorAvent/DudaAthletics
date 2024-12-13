@@ -5,7 +5,15 @@ import { data } from '../data/module-data';
 function Lab3Page() {
   return (
     <div>
-      <h1>Lab 3</h1>
+      <h1 style={{ 
+            color: 'darkgoldenrod',
+            textAlign: 'center',
+            textStroke: '1px black',
+            WebkitTextStroke: '1px black',
+            fontWeight: 'bold',
+            fontSize: '40px', }}>
+            Profile podopiecznych
+      </h1>
       <FlexContainer element={ProfileCard} data={data} />
     </div>
   );
