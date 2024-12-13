@@ -1,37 +1,45 @@
-import { data } from '../data/module-data';
+import { useContext } from 'react';
+import RatingBar from '../components/RatingBar';
+import AppContext from '../data/AppContext';
 import { useNavigate } from 'react-router-dom';
 function Lab1Page() {
-  const navigate = useNavigate();
- 
-  const goToPersonDetails = person => {
-    navigate(`/lab2?id=${person.id}`);
-  };
- 
-  return (
-    <div className="container mt-4">
-      <h1 className="text-center mb-4">Lab 1</h1>
-      <h3 className="text-center mb-4">Lista podopiecznych:</h3>
+    const context = useContext(AppContext);
+    const navigate = useNavigate();
+    const dispatch = context.dispatch;
+    const items = context.items;
 
-      <div className="row">
-        {data.map(person => (
-          <div key={person.id} className="col-md-4 mb-4">
-            <div className="card h-100">
-              <div className="card-body">
-                <h5 className="card-title">{person.name}</h5>
-              </div>
-              <div className="card-footer">
-                <button
-                  onClick={() => goToPersonDetails(person)}
-                  className="btn btn-primary">
-                  View Profile
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+    return (
+        <>
+            <h1>Laboratorium 1</h1>
+            <ul className="list-unstyled">
+                {items.map((person) => (
+                    <li key={person.id} className="d-flex justify-content-between align-items-center mb-2">
+                        <span>{person.name}</span>
+                        <div className="ms-auto me-2">
+                            <RatingBar rate={person.rating} />
+                        </div>
+                        <div>
+                            <button
+                                onClick={() => navigate(`/lab4/edit/${person.id}`)}
+                                className="btn btn-primary btn-sm me-2">
+                                Edit
+                            </button>
+                            <button
+                                onClick={() => dispatch({ type: "delete", id: person.id })}
+                                className="btn btn-danger btn-sm me-2">
+                                Delete
+                            </button>
+                            <button
+                                onClick={() => dispatch({ type: "rate", id: person.id })}
+                                className="btn btn-warning btn-sm">
+                                Rate
+                            </button>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </>
+    );
 }
  
 export default Lab1Page;

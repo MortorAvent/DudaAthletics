@@ -1,64 +1,49 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
-import AppContext from "../data/AppContext";
-
+import AppContext from '../data/AppContext';
 function EditForm() {
-    const { id } = useParams(); 
-    const { items, dispatch } = useContext(AppContext);
+    const { id } = useParams();
+    const context = useContext(AppContext);
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: context.items.find(item => item.id === Number(id))
+    });
     const navigate = useNavigate();
-
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-
-    useEffect(() => {
-        const itemToEdit = items.find((item) => item.id === parseInt(id));
-        if (itemToEdit) {
-            setValue("id", itemToEdit.id); 
-            setValue("name", itemToEdit.name);
-            setValue("rating", itemToEdit.rating);
-        }
-    }, [id, items, setValue]);
-
+    const dispatch = context.dispatch;
     const onSubmit = (data) => {
         dispatch({
-            type: "EDIT_ITEM",
-            payload: { id: parseInt(data.id), name: data.name, rating: parseFloat(data.rating) },
+            type: "edit",
+            data: {
+                id: Number(id),
+                name: data.name,
+                birth: data.birth,
+                eyes: data.eyes,
+                rating: Number(data.rating)
+            }
         });
-        navigate("/"); 
+        navigate("/lab1"); 
     };
-
     return (
-        <div>
-            <h1>Edit Object</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                
-                <input type="hidden" {...register("id")} />
-
-                <div>
-                    <label htmlFor="name">Imię:</label>
-                    <input
-                        id="name"
-                        {...register("name", { required: "Name is required", maxLength: 50 })}
-                    />
-                    {errors.name && <p className="text-danger">{errors.name.message}</p>}
-                </div>
-                <div>
-                    <label htmlFor="rating">Ocena:</label>
-                    <input
-                        type="number"
-                        id="rating"
-                        {...register("rating", {
-                            required: "Rating is required",
-                            min: { value: 0, message: "Rating must be at least 0" },
-                            max: { value: 10, message: "Rating cannot exceed 10" },
-                        })}
-                    />
-                    {errors.rating && <p className="text-danger">{errors.rating.message}</p>}
-                </div>
-                <button type="submit">Zapisz zmiany</button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <input type="hidden" {...register("id")} />
+            
+            <label htmlFor="name">Imię użytkownika</label>
+            <input type="text" id="name" {...register("name", { required: true, minLength: 3, maxLength: 40 })} />
+            {errors.name && <p className="text-danger">Imię użytkownika jest wymagane i musi mieć od 3 do 40 znaków.</p>}
+            
+            <label htmlFor="birth">Data urodzenia</label>
+            <input type="date" id="birth" {...register("birth", { required: true })} />
+            {errors.birth && <p className="text-danger">Data urodzenia jest wymagana.</p>}
+            
+            <label htmlFor="eyes">Kolor oczu użytkownika</label>
+            <input type="text" id="eyes" {...register("eyes", { required: true, minLength: 3, maxLength: 20 })} />
+            {errors.eyes && <p className="text-danger">Kolor oczu jest wymagany i musi mieć od 3 do 20 znaków.</p>}
+            
+            <label htmlFor="rating">Rating użytkownika</label>
+            <input type="number" id="rating" {...register("rating", { required: true, min: 0, max: 10 })} />
+            {errors.rating && <p className="text-danger">Rating użytkownika jest wymagany i musi być w zakresie od 0 do 10.</p>}
+            <button type="submit" className="btn btn-primary mt-3">Zapisz</button>
+        </form>
     );
 }
-
 export default EditForm;

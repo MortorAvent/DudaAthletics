@@ -1,83 +1,67 @@
-import { useContext, useState } from 'react';
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import AppContext from '../data/AppContext';
- 
-const allowedEyeColors = ['brown', 'blue', 'green', 'hazel'];
- 
 function CreateForm() {
-  const { dispatch } = useContext(AppContext);
-  const [errors, setErrors] = useState([]);
- 
-  const handleSubmit = e => {
-    e.preventDefault();
- 
-    const form = e.target;
-    const newItem = {
-      name: form.name.value,
-      birth: form.birth.value,
-      eyes: form.eyes.value,
-      rating: parseInt(form.rating.value),
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState([]);
+    const [isSending, setSending] = useState(false);
+    const context = useContext(AppContext);
+    const dispatch = context.dispatch;
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        if (data.get("name").charAt(0) !== data.get("name").charAt(0).toUpperCase()) {
+            setErrors([...errors, "Nazwa użytkownika musi zaczynać się od wielkiej litery"]);
+            return;
+        }
+
+        if (errors.length != 0) {            
+            return;
+        }
+
+        setSending(true);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        dispatch({
+            type: "add",
+            data: {
+                id: Date.now(),
+                name: data.get("name"),
+                birth: data.get("birth"),
+                eyes: data.get("eyes"),
+                rating: Number(data.get("rating"))
+            }
+        });
+        setSending(false);
+
+        for (let key of data.keys()) {
+            e.target[key].value = ""; 
+        }
+        navigate("/lab1", { replace: true });
     };
- 
-    const newErrors = [];
- 
-    if (!/^[A-Z]/.test(newItem.name)) {
-      newErrors.push('Imię musi zaczynać się od dużej litery');
-    }
- 
-    if (!allowedEyeColors.includes(newItem.eyes.toLowerCase())) {
-      newErrors.push(
-        'Kolor oczu musi być jednym z dozwolonych: ' +
-          allowedEyeColors.join(', ')
-      );
-    }
- 
-    if (new Date(newItem.birth) > new Date()) {
-      newErrors.push('Data urodzenia nie może być z przyszłości');
-    }
- 
-    if (isNaN(newItem.rating) || newItem.rating < 0 || newItem.rating > 10) {
-      newErrors.push('Ocena musi być liczbą od 0 do 10');
-    }
- 
-    if (newErrors.length > 0) {
-      setErrors(newErrors);
-      return;
-    }
- 
-    dispatch({
-      type: 'add',
-      item: newItem,
-    });
- 
-    form.reset();
-    alert('Obiekt został dodany!');
-  };
- 
-  return (
-    <form onSubmit={handleSubmit}>
-      <h1>Dodaj Podopiecznego</h1>
- 
-      {errors.length > 0 && (
-        <div className="error-messages">
-          {errors.map((error, index) => (
-            <p key={index} className="error">
-              {error}
-            </p>
-          ))}
-        </div>
-      )}
- 
-      <label>Imię:<input type="text" name="name" maxLength={50} required /></label>
-      <br />
-      <label>Data Urodzenia:<input type="date" name="birth" required /></label>
-      <br />
-      <label>Kolor Oczu:<input type="text" name="eyes" maxLength={20} required /></label>
-      <br />
-      <label> Ocena:<input type="number" name="rating" min={0} max={10} required /></label>
-      <br />
-      <button type="submit">Dodaj</button>
-    </form>
-  );
+
+    return (
+       <form onSubmit={onSubmit}>
+
+        {/* {"id":2,"name":"Ola","birth":"1983-12-02","eyes":"brown","rating":7}, */}
+        {/* edit na react hook form */}
+
+        <label htmlFor="name">Imię użytkownika</label>
+        <input type="text" id="name" name="name" placeholder="Wpisz imię użytkownika" minLength="3" maxLength="40" required />
+        
+        <label htmlFor="birth">Nazwa użytkownika</label>
+        <input type="date" id="birth" name="birth" required />
+        
+        <label htmlFor="eyes">Kolor oczu użytkownika</label>
+        <input type="text" id="eyes" name="eyes" placeholder="Wpisz kolor oczu" minLength="3" maxLength="20" required />
+        
+        <label htmlFor="rating">Rating użytkownika</label>
+        <input type="number" id="rating" name="rating" min="0" max="10" required />
+
+        <button type="submit" className="btn btn-primary mt-3" disabled={isSending}>Zapisz</button>
+        <button type="reset" className="btn btn-primary mt-3">Wyczyść</button>
+       </form>
+    );
 }
- 
+
 export default CreateForm;
