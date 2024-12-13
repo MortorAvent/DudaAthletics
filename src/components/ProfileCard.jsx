@@ -59,13 +59,13 @@ function ProfileCard({ id, name, birth, eyes, rating }) {
         </Card.Title>
   
         <Card.Text style={{ color: 'black', marginTop: '10px' }}>
-          <strong style={{ color: 'darkgoldenrod' }}>Date of Birth:</strong> {birth}
+          <strong style={{ color: 'darkgoldenrod' }}>Data urodzenia:</strong> {birth}
         </Card.Text>
         <Card.Text style={{ color: 'black', marginTop: '10px' }}>
-          <strong style={{ color: 'darkgoldenrod' }}>Eye Color:</strong> {eyes}
+          <strong style={{ color: 'darkgoldenrod' }}>Kolor oczu:</strong> {eyes}
         </Card.Text>
         <Card.Text style={{ color: 'black', marginTop: '10px' }}>
-          <strong style={{ color: 'darkgoldenrod' }}>Rating:</strong> {rating}
+          <strong style={{ color: 'darkgoldenrod' }}>Ocena:</strong> {rating}
         </Card.Text>
   
         {/* Rating Bar */}
@@ -90,7 +90,7 @@ function ProfileCard({ id, name, birth, eyes, rating }) {
               e.target.style.boxShadow = 'none';
             }}
           >
-            Edit
+            Edytuj
           </Button>
           <Button
             onClick={handleDeleteClick}
@@ -110,7 +110,7 @@ function ProfileCard({ id, name, birth, eyes, rating }) {
               e.target.style.boxShadow = 'none';
             }}
           >
-            Delete
+            Usuń
           </Button>
           <Button
             onClick={handleRateClick}
@@ -130,7 +130,7 @@ function ProfileCard({ id, name, birth, eyes, rating }) {
               e.target.style.boxShadow = 'none';
             }}
           >
-            Rate
+            Oceń
           </Button>
         </div>
       </Card.Body>

@@ -11,7 +11,7 @@ function Lab3Page() {
             textStroke: '1px black',
             WebkitTextStroke: '1px black',
             fontWeight: 'bold',
-            fontSize: '40px', }}>
+            fontSize: '36px', }}>
             Profile podopiecznych
       </h1>
       <FlexContainer element={ProfileCard} data={data} />
