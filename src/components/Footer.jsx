@@ -16,7 +16,7 @@ function Footer() {
             />
           </Col>
           <Col xs={12} md={6} className="text-white text-center text-md-end">
-            <p className="mb-0">Autor aplikacji: Szczepan Duda </p>
+            <p className="mb-0" style={{ fontSize: '20px' }}>Autor aplikacji: Szczepan Duda </p>
           </Col>
         </Row>
       </Container>
