@@ -14,6 +14,8 @@ import { useReducer } from 'react';
 import AppReducer from './data/AppReducer';
 import CreateForm from './components/AddForm';
 import EditForm from './components/EditForm';
+import RegistrationForm from './components/RegistrationForm';
+import ProfileForm from './components/ProfileForm';
  
 function App() {
   const [state, appDispatch] = useReducer(AppReducer, data);
@@ -21,6 +23,7 @@ function App() {
     <AppContext.Provider value={{ items: state, dispatch: appDispatch }}>
       <RootLayout>
         <Routes>
+          
           <Route path="/" element={<HomePage />} />
           <Route path="/lab1" element={<Lab1Page />} />
           <Route path="/lab2" element={<Lab2Page />} />
@@ -29,6 +32,8 @@ function App() {
           <Route path="/lab4/edit/:id" element={<EditForm />} />
           <Route path="/lab4/add" element={<CreateForm />} />
           <Route path="/people/:id" element={<PeoplePage />} />
+          <Route path="/register" element={<RegistrationForm />} />
+          <Route path="/profile" element={<ProfileForm />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </RootLayout>
