@@ -22,7 +22,7 @@ const ProfileForm = ({ defaultEmail = "test@example.com" }) => {
         margin: "0 auto",
       }}
     >
-      <h2 style={{ textAlign: "center", color: "darkgoldenrod" }}>Profil</h2>
+      <h2 style={{ textAlign: "center", color: "darkgoldenrod", textStroke: '1px black', WebkitTextStroke: '1px black',}}>Profil</h2>
 
       <label htmlFor="username">Nazwa użytkownika:</label>
       <input
@@ -65,12 +65,20 @@ const ProfileForm = ({ defaultEmail = "test@example.com" }) => {
       <button
         type="submit"
         style={{
-          backgroundColor: "darkgoldenrod",
-          color: "black",
-          border: "2px solid black",
-          fontWeight: "bold",
-          padding: "10px",
-          width: "100%",
+          backgroundColor: 'darkgoldenrod',
+          color: 'black',
+          border: '2px solid black',
+          fontWeight: 'bold',
+          padding: '10px 20px',
+          width: '100%',
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.backgroundColor = 'gold';
+          e.target.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.2)';
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.backgroundColor = 'darkgoldenrod';
+          e.target.style.boxShadow = 'none';
         }}
       >
         Zapisz zmiany

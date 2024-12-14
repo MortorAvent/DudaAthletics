@@ -13,13 +13,12 @@ const RegistrationForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Dane rejestracyjne:", data); // Możesz tutaj dodać logikę do obsługi rejestracji użytkownika (np. zapis do bazy)
+    console.log("Dane rejestracyjne:", data);
     
-    // Po udanej rejestracji przekierowanie na stronę główną
     navigate("/"); 
   };
 
-  const password = watch("password"); // Nasłuch hasła do walidacji potwierdzenia hasła
+  const password = watch("password"); 
 
   return (
     <form
@@ -33,8 +32,8 @@ const RegistrationForm = () => {
         margin: "0 auto",
       }}
     >
-      <h2 style={{ textAlign: "center", color: "darkgoldenrod" }}>Rejestracja</h2>
-      
+      <h2 style={{ textAlign: "center", color: "darkgoldenrod",textStroke: '1px black', WebkitTextStroke: '1px black',}}>Rejestracja</h2>
+       
       {/* Pole: Nazwa użytkownika */}
       <label htmlFor="username">Nazwa użytkownika:</label>
       <input
@@ -91,12 +90,20 @@ const RegistrationForm = () => {
       <button
         type="submit"
         style={{
-          backgroundColor: "darkgoldenrod",
-          color: "black",
-          border: "2px solid black",
-          fontWeight: "bold",
-          padding: "10px",
-          width: "100%",
+          backgroundColor: 'darkgoldenrod',
+          color: 'black',
+          border: '2px solid black',
+          fontWeight: 'bold',
+          padding: '10px 20px',
+          width: '100%',
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.backgroundColor = 'gold';
+          e.target.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.2)';
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.backgroundColor = 'darkgoldenrod';
+          e.target.style.boxShadow = 'none';
         }}
       >
         Zarejestruj się
