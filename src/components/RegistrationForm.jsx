@@ -1,16 +1,25 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
+  const navigate = useNavigate();
+  
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
 
-  const password = watch("password");
+  const onSubmit = (data) => {
+    console.log("Dane rejestracyjne:", data); // Możesz tutaj dodać logikę do obsługi rejestracji użytkownika (np. zapis do bazy)
+    
+    // Po udanej rejestracji przekierowanie na stronę główną
+    navigate("/"); 
+  };
+
+  const password = watch("password"); // Nasłuch hasła do walidacji potwierdzenia hasła
 
   return (
     <form
@@ -25,8 +34,9 @@ const RegistrationForm = () => {
       }}
     >
       <h2 style={{ textAlign: "center", color: "darkgoldenrod" }}>Rejestracja</h2>
-
-      <label htmlFor="username">Nazwa Użytkownika:</label>
+      
+      {/* Pole: Nazwa użytkownika */}
+      <label htmlFor="username">Nazwa użytkownika:</label>
       <input
         type="text"
         id="username"
@@ -36,6 +46,7 @@ const RegistrationForm = () => {
       />
       {errors.username && <p style={{ color: "red" }}>{errors.username.message}</p>}
 
+      {/* Pole: Email */}
       <label htmlFor="email">Email:</label>
       <input
         type="email"
@@ -46,6 +57,7 @@ const RegistrationForm = () => {
       />
       {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
 
+      {/* Pole: Hasło */}
       <label htmlFor="password">Hasło:</label>
       <input
         type="password"
@@ -59,6 +71,7 @@ const RegistrationForm = () => {
       />
       {errors.password && <p style={{ color: "red" }}>{errors.password.message}</p>}
 
+      {/* Pole: Potwierdź hasło */}
       <label htmlFor="confirmPassword">Potwierdź hasło:</label>
       <input
         type="password"
@@ -74,6 +87,7 @@ const RegistrationForm = () => {
         <p style={{ color: "red" }}>{errors.confirmPassword.message}</p>
       )}
 
+      {/* Przycisk: Zarejestruj się */}
       <button
         type="submit"
         style={{
@@ -92,4 +106,5 @@ const RegistrationForm = () => {
 };
 
 export default RegistrationForm;
+
 

@@ -10,6 +10,7 @@ function RootLayout({ children }) {
   const handleLogout = () => {
     setIsLoggedIn(false);
     console.log('User logged out');
+    // Możesz dodać tutaj nawigację na stronę główną lub inną logikę
   };
 
   const menuItems = [
@@ -18,19 +19,21 @@ function RootLayout({ children }) {
     { id: 3, label: 'Laboratorium 2', link: '/lab2' },
     { id: 4, label: 'Laboratorium 3', link: '/lab3' },
     { id: 5, label: 'Laboratorium 4', link: '/lab4' },
-    { id: 6, label: 'Zarejestruj się', link: '/register' },
-    { id: 7, label: 'Moj profil', link: '/profile' },
-
-
+    { id: 6, label: 'Mój profil', link: '/profile' },
+    { id: 7, label: 'Zarejestruj się', link: '/register' },
+    { id: 8, label: 'Wyloguj się', link: '/' },
   ];
 
   return (
     <>
       <div className="d-flex flex-column min-vh-100">
-        <NavBarMenu items={menuItems} isLoggedIn={isLoggedIn} onLogout={handleLogout} showRegisterButton />
-
+        <NavBarMenu
+          items={menuItems}
+          isLoggedIn={isLoggedIn}
+          onLogout={handleLogout}
+          showRegisterButton={!isLoggedIn}
+        />
         <Container className="flex-grow-1 mt-4">{children}</Container>
-
         <Footer />
       </div>
     </>
