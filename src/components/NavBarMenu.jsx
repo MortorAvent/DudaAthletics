@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 
 function NavBarMenu({ items, isLoggedIn, onLogout }) {
   return (
-    <Navbar expand="lg" className="navbar navbar-dark bg-dark">
+    <Navbar
+      expand="lg"
+      className="navbar navbar-dark bg-dark"
+      style={{
+        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', // Dodanie szarego cienia
+        zIndex: 1000, // Aby navbar zawsze znajdował się na wierzchu
+      }}
+    >
       <Container>
         <img
           src="../../base_icon_transparent_background.png"
